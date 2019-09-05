@@ -1,25 +1,19 @@
 package InsertionSort;
 
+import Base.Sorter;
 import Graphics.BarGraph;
 
 import java.util.List;
 
-public class InsertionSorter {
-
-    private BarGraph barGraph;
-    private List<Integer> numbers;
+public class InsertionSorter extends Sorter {
 
     public InsertionSorter(BarGraph barGraph, List<Integer> numbers) {
-        this.barGraph = barGraph;
-        this.numbers = numbers;
+        super(barGraph, numbers);
     }
 
     public void sortData() {
-        int iterator = 1; // Skip the first one
-        boolean sorted = false;
+        setIteratorStart(1); // Skip the first one
         barGraph.getBarGraph("Insertion sort", numbers);
-        int maxSize = numbers.size() - 1;
-        int movesThisRound = 0;
 
         while (!sorted)  {
             int currValue = numbers.get(iterator);
@@ -35,20 +29,9 @@ public class InsertionSorter {
 
                 barGraph.updateBars(numbers);
             }
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (iterator >= maxSize) {
-                if (movesThisRound < 1) {
-                    sorted = true;
-                } else {
-                    iterator = 1;
-                    movesThisRound = 0;
-                }
-            }
+            delay();
             iterator++;
+            endOrReset();
         }
         System.out.println("SORTED");
         System.out.println(numbers);
